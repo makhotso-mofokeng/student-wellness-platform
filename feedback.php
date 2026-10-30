@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,8 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($row = $result->fetch_assoc()) {
         $student_id = $row['id'];
 
-        $stmt2 = $conn->prepare("INSERT INTO feedback (student_id, message, date_submitted) VALUES (?, ?, ?)");
-        $stmt2->bind_param("iss", $student_id, $message, $date);
+               $rating = $_POST['rating'];
+        $stmt2 = $conn->prepare("INSERT INTO feedback (student_id, message, rating, date_submitted) VALUES (?, ?, ?, ?)");
+        $stmt2->bind_param("isis", $student_id, $message, $rating, $date);
         $stmt2->execute();
 
         echo "<p style='color: green; font-weight: bold;'>Feedback submitted successfully!</p>";
@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><a href="resources.php">Wellness Resources</a></li>
             <li><a href="mentors.php">Peer Mentors</a></li>
             <li><a href="support_request.php">Support Request</a></li>
-            <li><a href="feedback.php">Feedback</a></li>
+                        <li><a href="feedback.php">Feedback</a></li>
+            <li><a href="mentor_login.php">Mentor Login</a></li>
         </ul>
     </nav>
 
@@ -56,8 +57,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Your Email:</label><br>
             <input type="email" name="email" required><br><br>
 
-            <label>Message:</label><br>
-            <textarea name="message" rows="5" cols="40" required></textarea><br><br>
+                   <label>Message:</label><br>
+        <textarea name="message" rows="5" cols="40" required></textarea><br><br>
+
+        <label>How would you rate your experience using this platform?</label><br>
+        <select name="rating" required>
+            <option value="">-- Select a Rating --</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Average</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Very Poor</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit Feedback">
 
             <input type="submit" value="Submit Feedback">
         </form>

@@ -22,7 +22,8 @@ $result = $conn->query("SELECT * FROM mentors");
             <li><a href="resources.php">Wellness Resources</a></li>
             <li><a href="mentors.php">Peer Mentors</a></li>
             <li><a href="support_request.php">Support Request</a></li>
-            <li><a href="feedback.php">Feedback</a></li>
+                       <li><a href="feedback.php">Feedback</a></li>
+            <li><a href="mentor_login.php">Mentor Login</a></li>
         </ul>
     </nav>
 
